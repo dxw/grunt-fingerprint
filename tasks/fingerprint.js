@@ -6,45 +6,52 @@
  * Licensed under the MIT license.
  */
 
-'use strict';
+'use strict'
+
+const util = require('util')
+const fs = require('fs')
+const crypto = require('crypto')
+
+  // async versions of stdlib functions
+const readFile = util.promisify(fs.readFile)
+const writeFile = util.promisify(fs.writeFile)
+const rename = util.promisify(fs.rename)
+
+  // Our functions
+const rewrite = (fileName, hash) => fileName.replace(/\./, '-'+hash+'.')
+const hashFile = async function (fileName) {
+  const fileContents = await readFile(fileName)
+  return crypto.createHash('sha1').update(fileContents).digest('hex')
+}
 
 module.exports = function(grunt) {
+  grunt.task.registerMultiTask('fingerprint', 'Fingerprint assets', async function () {
+    const done = this.async()
 
-  // Please see the Grunt documentation for more information regarding task
-  // creation: http://gruntjs.com/creating-tasks
+    const rewrittenFiles = {}
 
-  grunt.registerMultiTask('fingerprint', 'The best Grunt plugin ever.', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      punctuation: '.',
-      separator: ', '
-    });
+    for (const input of this.filesSrc) {
+      const hash = await hashFile(input)
+      const output = rewrite(input, hash)
 
-    // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
-      // Concat specified files.
-      var src = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        } else {
-          return true;
-        }
-      }).map(function(filepath) {
-        // Read file source.
-        return grunt.file.read(filepath);
-      }).join(grunt.util.normalizelf(options.separator));
+        // Store for later
+      rewrittenFiles[input] = output
 
-      // Handle options.
-      src += options.punctuation;
+        // Move the file
+      await rename(input, output)
 
-      // Write the destination file.
-      grunt.file.write(f.dest, src);
+        // Log
+      grunt.log.writeln('Moved '+input+' to '+output)
+    }
 
-      // Print a success message.
-      grunt.log.writeln('File "' + f.dest + '" created.');
-    });
-  });
+      // Write to the JSON file
+    await writeFile(this.data.options.json, JSON.stringify({
+      rewrittenFiles: rewrittenFiles,
+    })+'\n')
 
-};
+        // Log
+    grunt.log.writeln('Wrote JSON file to '+this.data.options.json)
+
+    done()
+  })
+}
