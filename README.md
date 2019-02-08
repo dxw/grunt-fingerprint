@@ -1,21 +1,6 @@
 # grunt-fingerprint
 
-> The best Grunt plugin ever.
-
-## Getting Started
-This plugin requires Grunt `~1.0`
-
-If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
-
-```shell
-npm install grunt-fingerprint --save-dev
-```
-
-Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
-
-```js
-grunt.loadNpmTasks('grunt-fingerprint');
-```
+Add hashes to assets.
 
 ## The "fingerprint" task
 
@@ -25,11 +10,13 @@ In your project's Gruntfile, add a section named `fingerprint` to the data objec
 ```js
 grunt.initConfig({
   fingerprint: {
-    options: {
-      // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
+    production: {
+      options: {
+        json: 'build/fingerprint.json',
+      },
+      src: [
+        'build/*.min.css',
+      ],
     },
   },
 });
@@ -37,53 +24,14 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
+#### options.json
 Type: `String`
-Default value: `',  '`
 
-A string value that is used to do something with whatever.
+The file in which to save the mappings between the old files and the renamed files.
 
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
-
-A string value that is used to do something else with whatever else.
-
-### Usage Examples
-
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
-
-```js
-grunt.initConfig({
-  fingerprint: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
+```
+% cat build/fingerprint.json
+{"rewrittenFiles":{"build/admin.min.css":"build/admin-9c5d365d759b82ad3814cc2a36d5ddc94f725e08.min.css","build/main.min.css":"build/main-6df9108c43e8d7ce54337838466d126d94aa9912.min.css"}}
 ```
 
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
-grunt.initConfig({
-  fingerprint: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
-
-## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
-
-## Release History
-_(Nothing yet)_
+Tip: Don't access this file via in-browser JavaScript (since it could be cached).
