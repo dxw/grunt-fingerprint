@@ -2,10 +2,21 @@
 
 Add hashes to assets.
 
-## The "fingerprint" task
+## Installation
 
-### Overview
-In your project's Gruntfile, add a section named `fingerprint` to the data object passed into `grunt.initConfig()`.
+First, make sure old fingerprinted files get deleted, otherwise your files will end up with multiple hashes. [grunt-contrib-clean](https://github.com/gruntjs/grunt-contrib-clean) will do this for you.
+
+Then, add the package:
+
+```
+yarn add --dev git+https://github.com/dxw/grunt-fingerprint.git
+```
+
+Add the following to your `Gruntfile.js`:
+
+```js
+grunt.loadNpmTasks('@dxw-digital/grunt-fingerprint')
+```
 
 ```js
 grunt.initConfig({
@@ -22,16 +33,15 @@ grunt.initConfig({
 });
 ```
 
-### Options
-
-#### options.json
-Type: `String`
-
-The file in which to save the mappings between the old files and the renamed files.
+Now, `grunt fingerprint` will move `build/main.min.css` to `build/main-da39a3ee5e6b4b0d3255bfef95601890afd80709.min.css` and leave a JSON file in `build/fingerprint.json` with a mapping between the old file and the new.
 
 ```
-% cat build/fingerprint.json
-{"rewrittenFiles":{"build/admin.min.css":"build/admin-9c5d365d759b82ad3814cc2a36d5ddc94f725e08.min.css","build/main.min.css":"build/main-6df9108c43e8d7ce54337838466d126d94aa9912.min.css"}}
+% jq . < build/fingerprint.json
+{
+  "rewrittenFiles": {
+    "build/main.min.css": "build/main-da39a3ee5e6b4b0d3255bfef95601890afd80709.min.css"
+  }
+}
 ```
 
-Tip: Don't access this file via in-browser JavaScript (since it could be cached).
+Note: I recommend not accessing the JSON file via in-browser JS because it will be cached.
