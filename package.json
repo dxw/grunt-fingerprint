@@ -24,16 +24,19 @@
   "engines": {
     "node": ">= 0.8.0"
   },
-  "scripts": {
-    "test": "grunt test"
-  },
   "devDependencies": {
     "grunt": "^1.0.3",
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-jshint": "^2.0.0",
-    "grunt-contrib-nodeunit": "^2.0.0"
+    "jshint": "^2.10.1"
   },
   "keywords": [
     "gruntplugin"
-  ]
+  ],
+  "resolutions": {
+    "jshint": "2.10.1"
+  },
+  "scripts": {
+    "test": "grunt jshint"
+  }
 }
