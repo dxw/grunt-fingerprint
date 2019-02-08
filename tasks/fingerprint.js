@@ -12,12 +12,12 @@ const util = require('util')
 const fs = require('fs')
 const crypto = require('crypto')
 
-  // async versions of stdlib functions
+// async versions of stdlib functions
 const readFile = util.promisify(fs.readFile)
 const writeFile = util.promisify(fs.writeFile)
 const rename = util.promisify(fs.rename)
 
-  // Our functions
+// Our functions
 const rewrite = (fileName, hash) => fileName.replace(/\./, '-'+hash+'.')
 const hashFile = async function (fileName) {
   const fileContents = await readFile(fileName)
@@ -34,22 +34,22 @@ module.exports = function(grunt) {
       const hash = await hashFile(input)
       const output = rewrite(input, hash)
 
-        // Store for later
+      // Store for later
       rewrittenFiles[input] = output
 
-        // Move the file
+      // Move the file
       await rename(input, output)
 
-        // Log
+      // Log
       grunt.log.writeln('Moved '+input+' to '+output)
     }
 
-      // Write to the JSON file
+    // Write to the JSON file
     await writeFile(this.data.options.json, JSON.stringify({
       rewrittenFiles: rewrittenFiles,
     })+'\n')
 
-        // Log
+    // Log
     grunt.log.writeln('Wrote JSON file to '+this.data.options.json)
 
     done()
