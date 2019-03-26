@@ -44,10 +44,22 @@ module.exports = function(grunt) {
       grunt.log.writeln('Moved '+input+' to '+output)
     }
 
+    // Read the existing data
+    let data = {
+      rewrittenFiles: {},
+    }
+    try {
+      const fileContents = await readFile(this.data.options.json)
+      data = JSON.parse(fileContents)
+    } catch (e) {
+      // Do nothing
+    }
+
+    // Merge existing data with new data
+    data.rewrittenFiles = Object.assign(data.rewrittenFiles, rewrittenFiles)
+
     // Write to the JSON file
-    await writeFile(this.data.options.json, JSON.stringify({
-      rewrittenFiles: rewrittenFiles,
-    })+'\n')
+    await writeFile(this.data.options.json, JSON.stringify(data)+'\n')
 
     // Log
     grunt.log.writeln('Wrote JSON file to '+this.data.options.json)
