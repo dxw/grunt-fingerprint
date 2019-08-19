@@ -64,7 +64,7 @@ camelcase@^2.0.0:
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-2.1.1.tgz#7c1d16d679a1bbe59ca02cacecfb011e201f5a1f"
   integrity sha1-fB0W1nmhu+WcoCys7PsBHiAfWh8=
 
-chalk@^2.4.1, chalk@~2.4.1:
+chalk@^2.4.2, chalk@~2.4.1:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"
   integrity sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==
@@ -303,14 +303,14 @@ grunt-contrib-clean@^2.0.0:
     async "^2.6.1"
     rimraf "^2.6.2"
 
-grunt-contrib-jshint@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/grunt-contrib-jshint/-/grunt-contrib-jshint-2.0.0.tgz#a2be576cdd2a21d87fa3b9e770de407a29563fd2"
-  integrity sha512-4qR411I1bhvVrPkKBzCUcrWkTEtBuWioXi9ABWRXHoplRScg03jiMqLDpzS4pDhVsLOTx5F9l+0cnMc+Gd2MWg==
+grunt-contrib-jshint@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/grunt-contrib-jshint/-/grunt-contrib-jshint-2.1.0.tgz#3d789807579034299da1b41c4d70e1ba722973ed"
+  integrity sha512-65S2/C/6RfjY/umTxfwXXn+wVvaYmykHkHSsW6Q6rhkbv3oudTEgqnFFZvWzWCoHUb+3GMZLbP3oSrNyvshmIQ==
   dependencies:
-    chalk "^2.4.1"
+    chalk "^2.4.2"
     hooker "^0.2.3"
-    jshint "~2.9.6"
+    jshint "~2.10.2"
 
 grunt-known-options@~1.1.0:
   version "1.1.1"
@@ -459,7 +459,7 @@ js-yaml@~3.13.0:
     argparse "^1.0.7"
     esprima "^4.0.0"
 
-jshint@2.10.2, jshint@^2.10.2, jshint@~2.9.6:
+jshint@2.10.2, jshint@^2.10.2, jshint@~2.10.2:
   version "2.10.2"
   resolved "https://registry.yarnpkg.com/jshint/-/jshint-2.10.2.tgz#ed6626c4f8223c98e94aaea62767435427a49a3d"
   integrity sha512-e7KZgCSXMJxznE/4WULzybCMNXNAd/bf5TSrvVEq78Q/K8ZwFpmBqQeDtNiHc3l49nV4E/+YeHU/JZjSUIrLAA==
