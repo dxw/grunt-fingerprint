@@ -27,7 +27,7 @@
   "devDependencies": {
     "grunt": "^1.4.0",
     "grunt-contrib-clean": "^2.0.0",
-    "grunt-contrib-jshint": "^2.1.0",
+    "grunt-contrib-jshint": "^3.0.0",
     "jshint": "^2.11.0"
   },
   "keywords": [
