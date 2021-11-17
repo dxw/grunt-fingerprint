@@ -1,12 +1,14 @@
+---
 version: 2
 updates:
+- package-ecosystem: github-actions
+  directory: "/"
+  schedule:
+    interval: daily
 - package-ecosystem: npm
   directory: "/"
   schedule:
     interval: daily
-    time: "09:00"
-    timezone: Etc/Greenwich
-  ignore:
-  - dependency-name: grunt
-    versions:
-    - 1.3.0
+  allow:
+  - dependency-type: production
+  open-pull-requests-limit: 0
